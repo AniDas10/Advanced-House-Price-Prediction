@@ -1,0 +1,56 @@
+LIFECYCLE 
+Exploring data analysis
+Feature engineering 
+Feature Selection
+
+
+
+while printing df.head() we see some columns are skipped so as to maintain the neatness
+but if u want all columns to be shown use this setting change
+after importing pandas in the source code 
+
+pd.pandas.set_option('display.max_columns',None)
+SImilarly for all rows replace max_columns with max_rows
+
+ROUTINE 
+-------------
+1. Missing values and how to deal with them 
+2. All the numerical variables
+3. Mapping distribution of numerical variables 
+4. Categorical variables
+5. Cardinality of categorical variables 
+6. Visualising the data 
+7. Dealing with outliers 
+8. FInding relationship between independent nd dependent features
+-------------
+
+Analyse the shape of the dataset 
+df.shape()
+
+Missing values 
+**************
+na_features = [features for features in df.columns if df[features].isnull().sum()>1]
+
+for feature in na_features:
+    print(feature, np.round(df[feature].isnull().mean(),4), ' % missing values')
+
+We print the percentage of missing values in each of those columns
+isnull() returns a list of missing values by assiging False 
+isnull().sum() returns the total number of False values
+
+- > If there are many missing values, we need to find the realtionship 
+    between missing values and the final output aka Sales Price 
+
+    If there is no dependency, we can simply drop that column with too many NaNs
+ 
+for feature in features_with_na:
+    data = df.copy()
+    # make a variable that indicates 1 if observation is missing 
+    data[feature] = np.where(data[feature].isnull(),1,0)
+
+    ata.groupby(feature)['SalePrice'].median().plot.bar()
+    plt.title(feature)
+    plt.show()
+
+We study and figure out dependency of the values on the output
+
